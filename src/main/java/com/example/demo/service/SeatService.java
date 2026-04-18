@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.entities.Booking;
 import com.example.demo.entities.Seat;
 import com.example.demo.entities.Status;
+import com.example.demo.exception.BookingNotFoundException;
 import com.example.demo.exception.SeatAlreadyBookedException;
 import com.example.demo.repository.BookingRepository;
 import com.example.demo.repository.SeatRepository;
@@ -32,12 +33,12 @@ public class SeatService {
 
         // 1️⃣ 判断状态
         if (seat.getStatus() != Status.AVAILABLE) {
-            throw new RuntimeException("Seat already taken");
+            throw new BookingNotFoundException("Seat already taken");
         }
 
         // 为了触发两个users同时预定同一张票的情况，这里让线程休眠数秒
         try {
-            Thread.sleep(8000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
